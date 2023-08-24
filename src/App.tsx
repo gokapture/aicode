@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import CaptureImageComponent from "./CaptureImageComponent";
 import SelectAvatarComponent from "./SelectAvatarComponent";
 import PreviewComponent from "./PreviewComponent";
+import axios from "axios";
 
 export const dataURItoBlob = (dataURI: string): Blob => {
   const byteString = atob(dataURI.split(",")[1]);
@@ -21,6 +22,46 @@ function App() {
   const [showButtons, setShowButtons] = useState(false);
   const [count, setCount] = useState(0);
   const [formData] = useState(new FormData()); // Initialize formData
+  useEffect(() => {
+    checkLocalStorageAppId();
+  }, []);
+
+  const checkLocalStorageAppId = async () => {
+    let storedAppId = localStorage.getItem("APP_ID");
+
+    if (!storedAppId || !(await isValidAppId(storedAppId))) {
+      promptForValidAppId();
+    }
+  };
+
+  const isValidAppId = async (appId: string): Promise<boolean> => {
+    try {
+      const response = await axios.post("https://fuzzy-gray-baseball-cap.cyclic.cloud/check-app-id", {
+        app_id: appId,
+      });
+      return response.data.bool;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const promptForValidAppId = async () => {
+    let isValid = false;
+
+    while (!isValid) {
+      const appIdInput = window.prompt("Enter GoKapture App ID") || "";
+      if (!appIdInput) continue;
+
+      isValid = await isValidAppId(appIdInput);
+
+      if (isValid) {
+        localStorage.setItem("APP_ID", appIdInput);
+        alert("App ID set successfully.");
+      } else {
+        alert("Please enter a valid App ID.");
+      }
+    }
+  };
 
   useEffect(() => {
     navigator.mediaDevices
