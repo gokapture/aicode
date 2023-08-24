@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import cp from "./assets/cp.jpeg";
 import cpc from "./assets/cpc.png";
 import cp3 from "./assets/cp3.png";
@@ -9,7 +9,6 @@ import im from "./assets/im.jpg";
 import z from "./assets/z.png";
 import thor from "./assets/thor.jpg";
 import axios from "axios";
-import { dataURItoBlob } from "./App";
 type SelectAvatarComponentProps = {
   setCount: React.Dispatch<React.SetStateAction<number>>;
   formData: FormData;
