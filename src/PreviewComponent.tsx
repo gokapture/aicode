@@ -12,7 +12,7 @@ const PreviewComponent: React.FC<PreviewComponentProps> = ({ formData }) => {
   useEffect(() => {
     console.log(formData.get("target_image"));
     console.log(formData.get("input_image"));
-    axios.post("http://localhost:3002/faceswap", formData).then((res) => {
+    axios.post("https://fuzzy-gray-baseball-cap.cyclic.cloud/faceswap", formData).then((res) => {
       setImage(res.data.image);
       formData.delete("target_image");
       formData.delete("input_image");
