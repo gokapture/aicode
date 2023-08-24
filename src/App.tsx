@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CaptureImageComponent from "./CaptureImageComponent";
 import SelectAvatarComponent from "./SelectAvatarComponent";
 import PreviewComponent from "./PreviewComponent";
-import axios from "axios";
 
 export const dataURItoBlob = (dataURI: string): Blob => {
   const byteString = atob(dataURI.split(",")[1]);
@@ -21,7 +20,7 @@ function App() {
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [showButtons, setShowButtons] = useState(false);
   const [count, setCount] = useState(0);
-  const [formData, setFormData] = useState(new FormData()); // Initialize formData
+  const [formData] = useState(new FormData()); // Initialize formData
 
   useEffect(() => {
     navigator.mediaDevices

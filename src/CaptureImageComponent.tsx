@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 type CaptureImageComponentProps = {
-  videoRef: React.RefObject<HTMLVideoElement>;
+  videoRef: React.RefObject<any>;
   capturedImage: string | null;
   showButtons: boolean;
   handleCaptureClick: () => void;
@@ -19,12 +19,11 @@ const CaptureImageComponent: React.FC<CaptureImageComponentProps> = ({
 }) => {
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
   const [flashlightOn, setFlashlightOn] = useState(false);
-
   const toggleFlashlight = () => {
     if (videoRef.current) {
-      const track = videoRef.current.srcObject?.getVideoTracks()[0];
-      if (track) {
-        const capabilities = track.getCapabilities();
+      const track = videoRef.current.srcObject?.getTracks()[0];
+      if (track && track.kind === "video") {
+        const capabilities = (track.getCapabilities() as any) || {};
         if ("torch" in capabilities) {
           track.applyConstraints({
             advanced: [{ torch: !flashlightOn }],
@@ -36,19 +35,25 @@ const CaptureImageComponent: React.FC<CaptureImageComponentProps> = ({
   };
 
   useEffect(() => {
-    if (videoRef.current) {
-      const track = videoRef.current.srcObject?.getVideoTracks()[0];
-      if (track && flashlightOn) {
-        const capabilities = track.getCapabilities();
-        if ("torch" in capabilities) {
-          track.applyConstraints({
-            advanced: [{ torch: false }],
-          });
-          setFlashlightOn(false);
+    let stream:any = null;
+    navigator.mediaDevices
+      .getUserMedia({ video: videoConstraints })
+      .then((mediaStream) => {
+        stream = mediaStream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
         }
+      })
+      .catch((error) => {
+        console.error("Error accessing camera:", error);
+      });
+  
+    return () => {
+      if (stream) {
+        stream.getTracks().forEach((track:any) => track.stop());
       }
-    }
-  }, [facingMode]);
+    };
+  }, []);
 
   const videoConstraints = {
     facingMode,
