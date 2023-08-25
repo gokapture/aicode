@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import cp from "./assets/1.jpg";
+
+import one from "./assets/1.jpg";
+import two from "./assets/2.jpg";
+import three from "./assets/3.jpg";
+import four from "./assets/4.jpg";
+import five from "./assets/5.jpg";
+import six from "./assets/6.jpg";
+import seven from "./assets/7.jpg";
+import eight from "./assets/8.jpg";
+import nine from "./assets/9.jpg";
+import ten from "./assets/10.jpg";
+import eleven from "./assets/11.jpg";
 type SelectAvatarComponentProps = {
   setCount: React.Dispatch<React.SetStateAction<number>>;
   formData: FormData;
@@ -8,10 +19,10 @@ const SelectAvatarComponent: React.FC<SelectAvatarComponentProps> = ({
   setCount,
   formData,
 }) => {
-  const [selected, setSelected] = useState(`/src/assets/${1}.jpg`);
+  const [selected, setSelected] = useState(one);
   const [clicked, setClicked] = useState(false);
-  console.log(cp);
-  // const images = [thor3, cpm5, wanda, thanos, sp, one, two, bw, hp2, hp3];
+  // console.log(cp);
+  const images = [one, two, three, four, five, six, seven, eight, nine, ten, eleven];
   
   const handleClickGenerate = async () => {
     setClicked(true);
@@ -47,16 +58,14 @@ const SelectAvatarComponent: React.FC<SelectAvatarComponentProps> = ({
           padding: "1rem",
         }}
       >
-        {Array.from({
-          length: 10,
-        }).map((imageUrl, index) => (
+        {images.map((imageUrl, index) => (
           <img
             onClick={() => {
-              setSelected(`/src/assets/${index + 1}.jpg`);
+              setSelected(imageUrl);
             }}
             key={index}
-            src={`/src/assets/${index + 1}.jpg`}
-            alt={`Image ${index}`}
+            src={imageUrl}
+            alt={imageUrl}
             style={{
               height: "6rem", // Adjust image width to your preference
               marginLeft: "0.5rem",
