@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 
 import one from "./assets/1.png";
-import two from "./assets/2.jpg";
-import three from "./assets/3.jpg";
-import four from "./assets/4.jpg";
+import two from "./assets/2.png";
+import three from "./assets/3.png";
+import four from "./assets/4.png";
 import five from "./assets/5.jpg";
 import six from "./assets/6.jpg";
-import seven from "./assets/7.jpg";
+import seven from "./assets/7.png";
 import eight from "./assets/8.jpg";
 import nine from "./assets/9.jpg";
-import ten from "./assets/10.jpg";
+import ten from "./assets/10.png";
 import eleven from "./assets/11.jpg";
 type SelectAvatarComponentProps = {
   setCount: React.Dispatch<React.SetStateAction<number>>;
