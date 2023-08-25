@@ -29,7 +29,7 @@ const PreviewComponent: React.FC<PreviewComponentProps> = ({ formData }) => {
                 image ||
                 "https://cdnl.iconscout.com/lottie/premium/thumb/loading-shapes-5391802-4514914.gif"
               }
-              className="w-full max-h-[40rem] rounded-3xl "
+              className="h-[45rem] object-cover w-[50rem] rounded-3xl "
               alt=""
             />
           ) : (

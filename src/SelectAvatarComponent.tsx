@@ -8,6 +8,16 @@ import cpf2 from "./assets/cpf2.webp";
 import im from "./assets/im.jpg";
 import z from "./assets/z.png";
 import thor from "./assets/thor.jpg";
+import thor3 from "./assets/thor.png"
+import cpm5 from "./assets/cpm5.jpg"
+import wanda from "./assets/wanda.png"
+import thanos from "./assets/thanos.png"
+import sp from "./assets/sp.png"
+import one from "./assets/1.jpg"
+import two from "./assets/2.jpg"
+import bw from "./assets/bw.png"
+import hp2 from "./assets/hp2.png"
+import hp3 from "./assets/hp3.png"
 
 type SelectAvatarComponentProps = {
   setCount: React.Dispatch<React.SetStateAction<number>>;
@@ -19,7 +29,27 @@ const SelectAvatarComponent: React.FC<SelectAvatarComponentProps> = ({
 }) => {
   const [selected, setSelected] = useState(cp);
   const [clicked, setClicked] = useState(false);
-  const images = [cp, cpc, im, cp3, z, cp2, thor, cpf, cpf2];
+  const images = [
+    cp,
+    cpc,
+    cp3,
+    cp2,
+    cpf,
+    cpf2,
+    im,
+    z,
+    thor,
+    thor3,
+    cpm5,
+    wanda,
+    thanos,
+    sp,
+    one,
+    two,
+    bw,
+    hp2,
+    hp3
+  ];
   
   const handleClickGenerate = async () => {
     setClicked(true);
