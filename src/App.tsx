@@ -36,7 +36,7 @@ function App() {
 
   const isValidAppId = async (appId: string): Promise<boolean> => {
     try {
-      const response = await axios.post("https://fuzzy-gray-baseball-cap.cyclic.cloud/check-app-id", {
+      const response = await axios.post("https://ai-photobooth.onrender.com/check-app-id", {
         app_id: appId,
       });
       return response.data.bool;
