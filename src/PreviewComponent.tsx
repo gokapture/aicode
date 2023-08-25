@@ -22,14 +22,14 @@ const PreviewComponent: React.FC<PreviewComponentProps> = ({ formData }) => {
   return (
     <div className="flex-1 w-full flex justify-center items-center flex-col">
       <div className="flex-1 max-w-[75%] border-black rounded-3xl p-1 flex justify-center items-center">
-        <div className="flex-1 max-w-[75%] rounded-3xl p-1 justify-center items-center flex">
+        <div className="flex-1 max-w-[75%] p-1 justify-center items-center flex">
           {!qr ? (
             <img
               src={
                 image ||
                 "https://cdnl.iconscout.com/lottie/premium/thumb/loading-shapes-5391802-4514914.gif"
               }
-              className="max-h-[50rem] object-cover w-[50rem] rounded-3xl "
+              className="w-full max-h-[35rem] object-contain rounded-3xl "
               alt=""
             />
           ) : (
