@@ -17,6 +17,8 @@ const SelectAvatarComponent: React.FC<SelectAvatarComponentProps> = ({
   setCount,
   formData,
 }) => {
+
+  // 6/4 and 4/6
   const [selected, setSelected] = useState(cp);
   const [clicked, setClicked] = useState(false);
   const images = [cp, cpc, im, cp3, z, cp2, thor, cpf, cpf2];
