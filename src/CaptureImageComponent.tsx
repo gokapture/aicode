@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 type CaptureImageComponentProps = {
   videoRef: React.RefObject<any>;
@@ -19,7 +19,13 @@ const CaptureImageComponent: React.FC<CaptureImageComponentProps> = ({
 }) => {
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
   const [flashlightOn, setFlashlightOn] = useState(false);
-  const toggleFlashlight = () => {
+
+  const videoConstraints = {
+    facingMode,
+    aspectRatio: 1 / 1.5,
+  };
+
+  const toggleFlashlight = useCallback(() => {
     if (videoRef.current) {
       const track = videoRef.current.srcObject?.getTracks()[0];
       if (track && track.kind === "video") {
@@ -32,7 +38,8 @@ const CaptureImageComponent: React.FC<CaptureImageComponentProps> = ({
         }
       }
     }
-  };
+  },[])
+
 
   useEffect(() => {
     let stream:any = null;
@@ -47,31 +54,17 @@ const CaptureImageComponent: React.FC<CaptureImageComponentProps> = ({
       .catch((error) => {
         console.error("Error accessing camera:", error);
       });
-  
     return () => {
       if (stream) {
-        stream.getTracks().forEach((track:any) => track.stop());
+        stream.getTracks().forEach((track:any) => {
+          track.stop();
+        });
       }
-    };
+    }
   }, []);
 
-  const videoConstraints = {
-    facingMode,
-  };
-
-  navigator.mediaDevices
-    .getUserMedia({ video: videoConstraints })
-    .then((stream) => {
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    })
-    .catch((error) => {
-      console.error("Error accessing camera:", error);
-    });
-
   return (
-    <div className="flex-1 w-full flex justify-center items-center flex-col">
+    <div className="flex-1 w-full flex justify-center items-center flex-col self-center">
       {!capturedImage && (
         <video
           ref={videoRef}
@@ -105,12 +98,11 @@ const CaptureImageComponent: React.FC<CaptureImageComponentProps> = ({
           )}
         </div>
       )}
-      {/* ... your existing code ... */}
       {!capturedImage && (
         <div className="flex justify-center items-center gap-2 flex-col">
           <div className="flex justify-center items-center flex-row gap-5">
             <button
-              className="mt-4 py-2 px-4 bg-gray-400 text-white rounded-3xl text-xl font-semibold relative overflow-hidden"
+              className="mt-4 py-2 px-4 bg-gray-700 text-white rounded-3xl text-xl font-semibold relative overflow-hidden"
               onClick={() => {
                 setFacingMode(facingMode === "user" ? "environment" : "user");
               }}
@@ -118,14 +110,14 @@ const CaptureImageComponent: React.FC<CaptureImageComponentProps> = ({
               Toggle Camera
             </button>
             <button
-              className="mt-4 py-2 px-4 bg-gray-400 text-white rounded-3xl text-xl font-semibold relative overflow-hidden"
+              className="mt-4 py-2 px-4 bg-gray-700 text-white rounded-3xl text-xl font-semibold relative overflow-hidden"
               onClick={toggleFlashlight}
             >
-              {flashlightOn ? "Turn Off Flashlight" : "Turn On Flashlight"}
+              {flashlightOn ? "Off Flashlight" : "On Flashlight"}
             </button>
           </div>
           <button
-            className="mt-4 py-2 px-4 bg-black text-white rounded-3xl text-xl font-semibold relative overflow-hidden"
+            className="mt-4 py-2 px-6 bg-black text-white rounded-full text-2xl font-semibold relative overflow-hidden"
             onClick={handleCaptureClick}
           >
             Capture

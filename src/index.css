@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.scrollable-container {
+    overflow: auto; /* or overflow: scroll; */
+    height: 400px; /* Adjust the height as needed */
+    border: 1px solid #ccc;
+    padding: 10px;
+  }

@@ -1,9 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CaptureImageComponent from "./CaptureImageComponent";
 import SelectAvatarComponent from "./SelectAvatarComponent";
 import PreviewComponent from "./PreviewComponent";
 import axios from "axios";
 
+import cp from "./assets/cp.jpeg";
+import cpc from "./assets/cpc.png";
+import cp3 from "./assets/cp3.png";
+import cp2 from "./assets/cp2.jpeg";
+import cpf from "./assets/cpf.jpg";
+import cpf2 from "./assets/cpf2.webp";
+import im from "./assets/im.jpg";
+import z from "./assets/z.png";
+import thor from "./assets/thor.jpg";
+const images = [cp, cpc, im, cp3, z, cp2, thor, cpf, cpf2];
 export const dataURItoBlob = (dataURI: string): Blob => {
   const byteString = atob(dataURI.split(",")[1]);
   const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
@@ -36,9 +46,12 @@ function App() {
 
   const isValidAppId = async (appId: string): Promise<boolean> => {
     try {
-      const response = await axios.post("https://ai-photobooth.onrender.com/check-app-id", {
-        app_id: appId,
-      });
+      const response = await axios.post(
+        "https://ai-photobooth.onrender.com/check-app-id",
+        {
+          app_id: appId,
+        }
+      );
       return response.data.bool;
     } catch (error) {
       return false;
@@ -64,22 +77,27 @@ function App() {
   };
 
   useEffect(() => {
+    const aspectRatio = 1.5;
+
     navigator.mediaDevices
-      .getUserMedia({ video: true })
+      .getUserMedia({
+        video: {
+          aspectRatio: 1/aspectRatio,
+          facingMode: "user", 
+        },
+      })
       .then((stream) => {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
       })
       .catch((error) => {
-        console.error(
-          "Error accessing webcam plz throw your device in garbage :)",
-          error
-        );
+        console.error("Error accessing webcam:", error);
       });
   }, [capturedImage, showButtons]);
 
-  const handleCaptureClick = async () => {
+
+  const handleCaptureClick = useCallback(async () => {
     if (videoRef.current) {
       const canvas = document.createElement("canvas");
       canvas.width = videoRef.current.videoWidth;
@@ -93,18 +111,19 @@ function App() {
       setCapturedImage(capturedDataURL);
       setShowButtons(true);
     }
-  };
-  const handleNextClick = () => {
-    setCount((e) => e + 1);
-  };
+  }, []);
 
-  const handleRetryClick = () => {
+  const handleNextClick = useCallback(() => {
+    setCount((e) => e + 1);
+  }, []);
+
+  const handleRetryClick = useCallback(() => {
     setCapturedImage(null);
     setShowButtons(false);
-  };
+  }, []);
 
   return (
-    <div className=" w-full flex justify-center items-center flex-col p-2 ">
+    <div className="h-screen w-full flex justify-center items-center flex-col p-2 ">
       <img
         src="https://www.gokapture.com/img/gokapture/favicon.png"
         alt="Logo"

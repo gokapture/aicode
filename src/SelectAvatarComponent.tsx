@@ -20,26 +20,24 @@ const SelectAvatarComponent: React.FC<SelectAvatarComponentProps> = ({
   const [selected, setSelected] = useState(cp);
   const [clicked, setClicked] = useState(false);
   const images = [cp, cpc, im, cp3, z, cp2, thor, cpf, cpf2];
+  
   const handleClickGenerate = async () => {
     setClicked(true);
     try {
-      const response = await axios.get(selected, {
-        responseType: "arraybuffer",
-      });
-      const imageBuffer = new Uint8Array(response.data);
-
-      const imageBlob = new Blob([imageBuffer], { type: "image/jpeg" });
-
-      const file = new File([imageBlob], "image.jpeg", { type: "image/jpeg" });
-      formData.append("target_image", file);
-      setCount((e) => e + 1);
+      const response = await fetch(selected);
+      const imageBuffer = await response.arrayBuffer();
+      
+      const imageFile = new File([imageBuffer], "image.jpeg", { type: "image/jpeg" });
+      formData.append("target_image", imageFile);
+      
+      setCount((prevCount) => prevCount + 1);
     } catch (error) {
       console.error("Error fetching image data:", error);
     }
   };
 
   return (
-    <div className="flex-1 w-full flex justify-center items-center flex-col">
+    <div className="w-full flex justify-center items-center flex-col">
       <div className="border-dashed flex-1 max-w-[75%] border-black border-2 rounded-3xl p-1">
         <img
           src={selected}
@@ -47,19 +45,36 @@ const SelectAvatarComponent: React.FC<SelectAvatarComponentProps> = ({
           alt=""
         />
       </div>
-      <div className="flex flex-1 w-full h-36 flex-row overflow-x-auto justify-center items-center">
-        {images.map((item) => (
+      <div
+        style={{
+          overflow: "scroll", // This will add scrollbars when needed
+          // border: "1px solid #ccc",
+          flexDirection: "row",
+          display: "flex",
+          marginTop: "1rem",
+          padding: "1rem",
+        }}
+      >
+        {images.map((imageUrl, index) => (
           <img
-            onClick={() => setSelected(item)}
-            src={item}
-            className={`h-24 mx-2 my-2 rounded-2xl ${
-              selected !== item && "opacity-80"
-            }`}
-            alt=""
+            onClick={() => {
+              setSelected(imageUrl);
+            }}
+            key={index}
+            src={imageUrl}
+            alt={`Image ${index}`}
+            style={{
+              height: "6rem", // Adjust image width to your preference
+              marginLeft: "0.5rem",
+              marginRight: "0.5rem",
+              borderRadius: "0.5rem",
+              opacity: imageUrl === selected ? 1 : 0.5,
+            }}
           />
         ))}
       </div>
-      <div className="flex justify-center items-center w-full gap-10">
+
+      <div className="flex justify-center items-center w-full gap-10 ">
         <button
           onClick={() => {
             setCount((e) => e - 1);
