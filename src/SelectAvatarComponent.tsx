@@ -8,7 +8,7 @@ import cpf2 from "./assets/cpf2.webp";
 import im from "./assets/im.jpg";
 import z from "./assets/z.png";
 import thor from "./assets/thor.jpg";
-import axios from "axios";
+
 type SelectAvatarComponentProps = {
   setCount: React.Dispatch<React.SetStateAction<number>>;
   formData: FormData;

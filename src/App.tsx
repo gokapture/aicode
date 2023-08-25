@@ -4,16 +4,6 @@ import SelectAvatarComponent from "./SelectAvatarComponent";
 import PreviewComponent from "./PreviewComponent";
 import axios from "axios";
 
-import cp from "./assets/cp.jpeg";
-import cpc from "./assets/cpc.png";
-import cp3 from "./assets/cp3.png";
-import cp2 from "./assets/cp2.jpeg";
-import cpf from "./assets/cpf.jpg";
-import cpf2 from "./assets/cpf2.webp";
-import im from "./assets/im.jpg";
-import z from "./assets/z.png";
-import thor from "./assets/thor.jpg";
-const images = [cp, cpc, im, cp3, z, cp2, thor, cpf, cpf2];
 export const dataURItoBlob = (dataURI: string): Blob => {
   const byteString = atob(dataURI.split(",")[1]);
   const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
