@@ -1,13 +1,5 @@
 import React, { useState } from "react";
 import cp from "./assets/cp.jpeg";
-import cpc from "./assets/cpc.png";
-import cp3 from "./assets/cp3.png";
-import cp2 from "./assets/cp2.jpeg";
-import cpf from "./assets/cpf.jpg";
-import cpf2 from "./assets/cpf2.webp";
-import im from "./assets/im.jpg";
-import z from "./assets/z.png";
-import thor from "./assets/thor.jpg";
 import thor3 from "./assets/thor.png"
 import cpm5 from "./assets/cpm5.jpg"
 import wanda from "./assets/wanda.png"
@@ -29,27 +21,7 @@ const SelectAvatarComponent: React.FC<SelectAvatarComponentProps> = ({
 }) => {
   const [selected, setSelected] = useState(cp);
   const [clicked, setClicked] = useState(false);
-  const images = [
-    cp,
-    cpc,
-    cp3,
-    cp2,
-    cpf,
-    cpf2,
-    im,
-    z,
-    thor,
-    thor3,
-    cpm5,
-    wanda,
-    thanos,
-    sp,
-    one,
-    two,
-    bw,
-    hp2,
-    hp3
-  ];
+  const images = [thor3, cpm5, wanda, thanos, sp, one, two, bw, hp2, hp3];
   
   const handleClickGenerate = async () => {
     setClicked(true);
