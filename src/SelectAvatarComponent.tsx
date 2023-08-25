@@ -1,16 +1,5 @@
 import React, { useState } from "react";
-import cp from "./assets/cp.jpeg";
-import thor3 from "./assets/thor.png"
-import cpm5 from "./assets/cpm5.jpg"
-import wanda from "./assets/wanda.png"
-import thanos from "./assets/thanos.png"
-import sp from "./assets/sp.png"
-import one from "./assets/1.jpg"
-import two from "./assets/2.jpg"
-import bw from "./assets/bw.png"
-import hp2 from "./assets/hp2.png"
-import hp3 from "./assets/hp3.png"
-
+import cp from "./assets/1.jpg";
 type SelectAvatarComponentProps = {
   setCount: React.Dispatch<React.SetStateAction<number>>;
   formData: FormData;
@@ -19,9 +8,10 @@ const SelectAvatarComponent: React.FC<SelectAvatarComponentProps> = ({
   setCount,
   formData,
 }) => {
-  const [selected, setSelected] = useState(cp);
+  const [selected, setSelected] = useState(`/src/assets/${1}.jpg`);
   const [clicked, setClicked] = useState(false);
-  const images = [thor3, cpm5, wanda, thanos, sp, one, two, bw, hp2, hp3];
+  console.log(cp);
+  // const images = [thor3, cpm5, wanda, thanos, sp, one, two, bw, hp2, hp3];
   
   const handleClickGenerate = async () => {
     setClicked(true);
@@ -57,13 +47,15 @@ const SelectAvatarComponent: React.FC<SelectAvatarComponentProps> = ({
           padding: "1rem",
         }}
       >
-        {images.map((imageUrl, index) => (
+        {Array.from({
+          length: 10,
+        }).map((imageUrl, index) => (
           <img
             onClick={() => {
-              setSelected(imageUrl);
+              setSelected(`/src/assets/${index + 1}.jpg`);
             }}
             key={index}
-            src={imageUrl}
+            src={`/src/assets/${index + 1}.jpg`}
             alt={`Image ${index}`}
             style={{
               height: "6rem", // Adjust image width to your preference
