@@ -95,6 +95,8 @@ useEffect(() => {
       <button
         onClick={() => {
           window.location.reload();
+		  formData.delete("target_image");
+        formData.delete("input_image")
         }}
         className="mt-4 py-2 px-6 bg-black text-white rounded-3xl text-xl font-semibold relative overflow-hidden"
       >
