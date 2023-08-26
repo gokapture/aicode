@@ -110,6 +110,10 @@ function App() {
   const handleRetryClick = useCallback(() => {
     setCapturedImage(null);
     setShowButtons(false);
+	
+	formData.delete("target_image");
+        formData.delete("input_image");
+		
   }, []);
 
   return (
@@ -126,6 +130,8 @@ function App() {
           handleRetryClick={handleRetryClick}
           showButtons={showButtons}
           videoRef={videoRef}
+		  
+		  
         />
       )}
       {count === 1 && (
