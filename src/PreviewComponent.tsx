@@ -9,15 +9,30 @@ type PreviewComponentProps = {
 const PreviewComponent: React.FC<PreviewComponentProps> = ({ formData }) => {
   const [image, setImage] = useState("");
   const [qr, setQr] = useState("");
-  useEffect(() => {
-    console.log(formData.get("target_image"));
-    console.log(formData.get("input_image"));
-    axios.post("https://ai-photobooth.cyclic.cloud/faceswap", formData).then((res) => {
-      setImage(res.data.image);
-      formData.delete("target_image");
-      formData.delete("input_image");
-    });
-  }, []);
+  
+useEffect(() => {
+    const sendFormData = async () => {
+      try {
+        console.log(formData.get("target_image"));
+        console.log(formData.get("input_image"));
+
+        const response = await axios.post("https://ai-photobooth.cyclic.cloud/faceswap", formData);
+
+        setImage(response.data.image);
+
+        // Clear the formData after the request
+        formData.delete("target_image");
+        formData.delete("input_image");
+      } catch (error) {
+        console.error("Error sending formData:", error);
+      }
+    };
+
+    // Trigger the formData submission when formData changes
+    if (formData.get("target_image") && formData.get("input_image")) {
+      sendFormData();
+    }
+  }, [formData]);
 
   return (
     <div className="flex-1 w-full flex justify-center items-center flex-col">
